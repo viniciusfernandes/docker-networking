@@ -4,9 +4,7 @@ import br.com.tutorial.dockernetworking.networkingmicroserviceprovider.model.Cus
 import br.com.tutorial.dockernetworking.networkingmicroserviceprovider.model.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +29,23 @@ public class CustomerController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(customers);
+    }
+
+    @PostMapping("/customers")
+    public ResponseEntity<List<Customer>> saveCustomers(@RequestBody List<Customer> customers) {
+        if (customers.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(customerRepository.saveCustomers(customers));
+    }
+
+
+    @DeleteMapping("/customers/{idCustomer}")
+    public ResponseEntity<Void> saveCustomers(@PathVariable String idCustomer) {
+        if (idCustomer == null || idCustomer.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var deleted = customerRepository.deleteCustomer(idCustomer);
+        return deleted ? ResponseEntity.accepted().build() : ResponseEntity.noContent().build();
     }
 }

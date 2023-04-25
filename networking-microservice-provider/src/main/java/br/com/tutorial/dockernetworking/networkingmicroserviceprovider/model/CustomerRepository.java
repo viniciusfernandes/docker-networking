@@ -3,11 +3,13 @@ package br.com.tutorial.dockernetworking.networkingmicroserviceprovider.model;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class CustomerRepository {
-    private final List<Customer> customers;
+    private final List<Customer> repository;
 
     public CustomerRepository() {
         var c1 = new Customer();
@@ -22,16 +24,36 @@ public class CustomerRepository {
         c2.email = "marcos@hotmail.com";
         c2.name = "Marcos Augustus";
 
-        customers = new ArrayList<>();
-        customers.add(c1);
-        customers.add(c2);
+        repository = new ArrayList<>();
+        repository.add(c1);
+        repository.add(c2);
     }
 
     public Customer findCustomerById(String id) {
-        return customers.stream().filter(c -> c.id.equals(id)).findFirst().orElse(null);
+        return repository.stream().filter(c -> c.id.equals(id)).findFirst().orElse(null);
     }
 
+
     public List<Customer> findCustomers() {
+        return repository;
+    }
+
+    public List<Customer> saveCustomers(List<Customer> customers) {
+        if (customers == null || customers.isEmpty()) {
+            return Collections.emptyList();
+        }
+        customers.forEach(customer -> customer.id = UUID.randomUUID().toString());
+        repository.addAll(customers);
         return customers;
+    }
+
+    public boolean deleteCustomer(String idCustomer) {
+        for (var i = 0; i < repository.size(); i++) {
+            if (repository.get(i).id.equals(idCustomer)) {
+                repository.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 }

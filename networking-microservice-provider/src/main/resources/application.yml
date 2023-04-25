@@ -1,0 +1,11 @@
+server:
+  servlet:
+    context-path: /provider
+
+springdoc:
+  packages-to-scan: br.com.tutorial.dockernetworking.networkingmicroserviceprovider.controller
+  swagger-ui:
+    enabled: true
+    path: /swagger
+    disable-swagger-default-url: true
+

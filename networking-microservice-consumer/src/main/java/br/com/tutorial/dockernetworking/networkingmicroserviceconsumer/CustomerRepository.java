@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-@FeignClient(value = "customer", url = "http://microservice-provider:8080/")
+@FeignClient(value = "customer", url = "http://customer-provider:8080/provider")
 public interface CustomerRepository {
     @RequestMapping(method = RequestMethod.GET, value = "/customer/{idCustomer}")
     public CustomerResponse findCustomerById(@PathVariable("idCustomer") String idCustomer);

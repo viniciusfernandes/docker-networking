@@ -15,8 +15,8 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @GetMapping("/consumer/customers/{idCustomer}")
-    public ResponseEntity<CustomerResponse>findCustomerById(@PathVariable("idCustomer") String idCustomer) {
+    @GetMapping("/customers/{idCustomer}")
+    public ResponseEntity<CustomerResponse> findCustomerById(@PathVariable("idCustomer") String idCustomer) {
         var customer = customerRepository.findCustomerById(idCustomer);
         if (customer == null) {
             return ResponseEntity.noContent().build();
@@ -24,7 +24,7 @@ public class CustomerController {
         return ResponseEntity.ok(customer);
     }
 
-    @GetMapping("/consumer/customers")
+    @GetMapping("/customers")
     public ResponseEntity<List<CustomerResponse>> findCustomers() {
         var customers = customerRepository.findCustomers();
         if (customers.isEmpty()) {
@@ -32,4 +32,6 @@ public class CustomerController {
         }
         return ResponseEntity.ok(customers);
     }
+
+
 }

@@ -1,5 +1,6 @@
 services:
   provider:
+      build: ./networking-microservice-provider
       image: viniciussf/customer-provider:latest
       container_name: customer-provider
       ports:
@@ -8,6 +9,7 @@ services:
         - customer-network
 
   consumer:
+      build: ./networking-microservice-consumer
       image: viniciussf/customer-consumer:latest
       container_name: customer-consumer
       ports:
